@@ -23,10 +23,9 @@ It is a highly trusted encryption algorithm used to secure the data converting i
 
 Encryption algorithm are divided into 2 categories -->
 Block and stream cipher
-A block cipher is an encryption algorithm that takes.a fixed size input, and produces. a cipher text of b bits. If the input is larger than b bits, it can be divided further.
+A block cipher is an encryption algorithm that takes a fixed size input, and produces. a cipher text of b bits. If the input is larger than b bits, it can be divided further.
 
-//Client side 
-import forge from 'node-forge';
+✅ 1. Generate AES Key (React / React Native)import forge from 'node-forge';
 
 export const generateAesKey = () => {
   const aesSalt = forge.random.getBytesSync(16); // 16 bytes salt
@@ -57,14 +56,25 @@ In React, this is okay.
 In React Native, this often fails or behaves inconsistently due to lack of Node-like APIs (e.g., buffer, crypto core modules).
 
 
-//Server side - node js
-const forge = require('node-forge');
+✅ 2. Generate RSA Key Pair (Server-side in Node.js)const forge = require('node-forge');
 
 const rsaKeyPair = forge.pki.rsa.generateKeyPair({ bits: BITS }); // e.g., 2048 or 4096
 const publicKeyPem = forge.pki.publicKeyToPem(rsaKeyPair.publicKey);
 const privateKeyPem = forge.pki.privateKeyToPem(rsaKeyPair.privateKey);
 
+What's happening?
 
+RSA key pair is generated server-side using node-forge.
+
+BITS defines the strength (2048-bit is secure for most cases).
+
+PEM format = Base64-encoded string with header/footer, suitable for transport.
+
+The public key is shared with the client.
+
+The private key remains on the server.
+
+✅ 3. Encrypt AES Key with RSA Public Key (Client-side React / React Native)
 import forge from 'node-forge';
 
 export const encryptAesKey = (receivedpublicKeyPem: string, aesKey: string) => {
@@ -99,8 +109,7 @@ Native CSPRNG
 window.crypto (not available like in browsers)
 
 
-//decrypt encrypted AES key with rsa private key
-const decryptedAesKey = rsaKeyPair.privateKey.decrypt(
+✅ 4. Decrypt AES Key using RSA Private Key (Server-side in Node.js)const decryptedAesKey = rsaKeyPair.privateKey.decrypt(
   forge.util.decode64(encryptedAesKey),
   'RSA-OAEP'
 );
