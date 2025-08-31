@@ -1,0 +1,762 @@
+Basic and Intermediate Questions
+Q: How do you check if a variable is an array in JavaScript?
+A: You can use Array.isArray(variable).
+
+Q: What's the difference between map() and forEach()?
+A: map() returns a new array with the results of a function call on every element, while forEach() doesn't return anything. forEach() is used for side effects, like logging to the console.
+
+Q: How do you add an element to the end of an array?
+A: Use the push() method: arr.push(element).
+
+Q: How do you add an element to the beginning of an array?
+A: Use the unshift() method: arr.unshift(element).
+
+Q: How do you remove the last element from an array?
+A: Use the pop() method: arr.pop().
+
+Q: How do you remove the first element from an array?
+A: Use the shift() method: arr.shift().
+
+Q: How do you find the index of a specific element?
+A: Use indexOf(): arr.indexOf(element). It returns -1 if the element is not found.
+
+Q: How do you check if an element exists in an array?
+**A: includes() is the modern way: arr.includes(element). It returns a boolean. You could also use indexOf() !== -1.
+
+Q: How do you create a shallow copy of an array?
+A: Use the spread operator (...): const newArr = [...oldArr];. Alternatively, slice() or Array.from() work.
+
+Q: How do you concatenate two arrays?
+A: Use the spread operator: const newArr = [...arr1, ...arr2];. Also, the concat() method works: arr1.concat(arr2).
+
+Q: How do you loop through an array?
+A: The for...of loop is a common and readable way for iterating over elements: for (const item of arr) { ... }. Traditional for loops and forEach() are also widely used.
+
+Q: How do you sort an array of numbers in ascending order?
+A: Use sort() with a compare function: arr.sort((a, b) => a - b);.
+
+Q: How do you sort an array of numbers in descending order?
+A: Use sort() with a compare function: arr.sort((a, b) => b - a);.
+
+Q: What does the reduce() method do?
+A: reduce() executes a reducer function on each element of the array, resulting in a single output value.
+
+Q: What's the purpose of the filter() method?
+A: filter() creates a new array with all elements that pass the test implemented by the provided function.
+
+Q: How do you find an object in an array of objects based on a property?
+A: Use find(): arr.find(obj => obj.id === 5);.
+
+Q: How do you reverse an array in-place?
+A: Use the reverse() method: arr.reverse().
+
+Q: How do you remove duplicates from an array?
+A: The simplest way is to use a Set: [...new Set(arr)];.
+
+Q: How do you join all elements of an array into a single string?
+A: Use the join() method: arr.join(', ');.
+
+Q: How do you get a subarray from an array?
+A: Use slice(): arr.slice(startIndex, endIndex).
+
+Advanced Questions
+Q: Explain the difference between splice() and slice().
+A: splice() modifies the original array by adding/removing elements. slice() returns a new array and does not change the original. Think of splice as for "splitting and changing" and slice as for "sli`cing a piece off".
+
+Q: How can you create a deep clone of an array containing objects?
+A: The most reliable way is using a library like Lodash's _.cloneDeep(). A quick, but less robust, method is JSON.parse(JSON.stringify(arr)), but it has limitations (e.g., it doesn't handle functions, Dates, or undefined).
+
+Q: What is a sparse array?
+A: A sparse array is one where elements don't have contiguous indices starting from 0. An array created with a specific length but no elements (new Array(10)) is a sparse array.
+
+Q: How would you flatten a nested array?
+A: For a single level, use arr.flat(). For deeply nested arrays, use arr.flat(Infinity).
+
+Q: How do you group an array of objects by a property?
+A: Use reduce() to build an accumulator object:
+
+JavaScript
+
+const arr = [{ type: 'A', id: 1 }, { type: 'B', id: 2 }, { type: 'A', id: 3 }];
+const grouped = arr.reduce((acc, obj) => {
+  const key = obj.type;
+  if (!acc[key]) {
+    acc[key] = [];
+  }
+  acc[key].push(obj);
+  return acc;
+}, {});
+Q: How do you find the intersection of two arrays?
+A: Use filter() and includes():
+
+JavaScript
+
+const arr1 = [1, 2, 3, 4];
+const arr2 = [3, 4, 5, 6];
+const intersection = arr1.filter(value => arr2.includes(value));
+Q: How do you find the difference between two arrays (elements in arr1 but not in arr2)?
+A: Similar to the intersection, but you filter for what's not included:
+
+JavaScript
+
+const arr1 = [1, 2, 3, 4];
+const arr2 = [3, 4, 5, 6];
+const difference = arr1.filter(value => !arr2.includes(value));
+Q: What is the some() method used for?
+A: some() tests whether at least one element in the array passes the test implemented by the provided function. It returns a boolean and short-circuits (stops) as soon as it finds a true value.
+
+Q: What is the every() method used for?
+A: every() tests whether all elements in the array pass the test implemented by the provided function. It returns a boolean and short-circuits as soon as it finds a false value.
+
+Q: How do you shuffle an array?
+A: The Fisher-Yates shuffle algorithm is the standard for a random, unbiased shuffle.
+
+JavaScript
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]]; // ES6 destructuring swap
+  }
+  return arr;
+}
+Coding Challenges
+Q: Write a function to find the largest element in an array of numbers.
+A:
+
+JavaScript
+
+function findLargest(arr) {
+  return arr.reduce((max, current) => (current > max ? current : max), arr[0]);
+}
+Or, a simpler approach: Math.max(...arr).
+
+Q: Write a function to check if an array is a palindrome.
+A:
+
+JavaScript
+
+function isPalindrome(arr) {
+  for (let i = 0; i < arr.length / 2; i++) {
+    if (arr[i] !== arr[arr.length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
+}
+Q: Write a function to find the first non-repeated character in an array of characters.
+A:
+
+JavaScript
+
+function firstNonRepeated(arr) {
+  const counts = {};
+  for (const char of arr) {
+    counts[char] = (counts[char] || 0) + 1;
+  }
+  for (const char of arr) {
+    if (counts[char] === 1) {
+      return char;
+    }
+  }
+  return null;
+}
+Q: Given an array of numbers, return a new array with only the even numbers.
+A: arr.filter(num => num % 2 === 0);
+
+Q: Write a function that takes an array of strings and returns a new array with all strings capitalized.
+A: arr.map(str => str.toUpperCase());
+
+Q: Find the sum of all numbers in an array.
+A: arr.reduce((sum, current) => sum + current, 0);
+
+Q: Merge two sorted arrays into one sorted array.
+A:
+
+JavaScript
+
+function mergeSortedArrays(arr1, arr2) {
+  return [...arr1, ...arr2].sort((a, b) => a - b);
+}
+// Note: The above is simple but not efficient for large arrays. A more efficient solution would use a two-pointer approach.
+Q: Write a function to find the second largest number in an array.
+A:
+
+JavaScript
+
+function findSecondLargest(arr) {
+  const uniqueSorted = [...new Set(arr)].sort((a, b) => b - a);
+  return uniqueSorted[1];
+}
+Q: Rotate an array to the right by k steps.
+A:
+
+JavaScript
+
+function rotateRight(arr, k) {
+  k = k % arr.length;
+  const removed = arr.splice(arr.length - k);
+  arr.unshift(...removed);
+  return arr;
+}
+Q: Check if an array is a subset of another array.
+A:
+
+JavaScript
+
+function isSubset(arr1, arr2) {
+  return arr2.every(val => arr1.includes(val));
+}
+... and so on. The full list would continue for 60 more questions in this format, with a similar mix of conceptual questions and coding challenges.
+
+
+yes provide other 60 as well
+
+
+
+Q: How can you check if an array contains a specific value using a custom comparison function?
+A: Use Array.prototype.find() or Array.prototype.findIndex() which accept a callback function.
+
+JavaScript
+
+const hasObject = arr.some(obj => obj.id === targetId);
+Q: What is the purpose of Array.from()? Give an example.
+A: Array.from() creates a new, shallow-copied Array instance from an iterable or array-like object. It's often used to convert an array-like object (like a NodeList from the DOM) into a true array or to create an array with a specific length.
+
+JavaScript
+
+const arr = Array.from({ length: 5 }, (_, i) => i + 1); // [1, 2, 3, 4, 5]
+Q: How do you check if two arrays are equal (contain the same elements in the same order)?
+A: Check if their lengths are the same and then use every() to compare each element.
+
+JavaScript
+
+function arraysAreEqual(arr1, arr2) {
+  return arr1.length === arr2.length && arr1.every((val, i) => val === arr2[i]);
+}
+Q: What is the flatMap() method and why is it useful?
+A: flatMap() maps each element using a mapping function, then flattens the result into a new array. It is a more concise way of doing map() followed by flat(1). It is useful for creating a new array where each element in the original array can be transformed into zero, one, or multiple elements in the new array.
+
+Q: How do you count the occurrences of each element in an array?
+A: Use reduce() to build an object where keys are the elements and values are their counts.
+
+JavaScript
+
+const arr = ['a', 'b', 'a', 'c', 'b', 'a'];
+const counts = arr.reduce((acc, val) => {
+  acc[val] = (acc[val] || 0) + 1;
+  return acc;
+}, {}); // { a: 3, b: 2, c: 1 }
+Q: What's the difference between an array and an object in JavaScript?
+A: An array is an ordered collection of data, where elements are accessed by a numeric index (starting from 0). An object is an unordered collection of key-value pairs, where data is accessed by a string key. Arrays are specialized objects in JavaScript.
+
+Q: How do you find the common elements in three arrays?
+A: Use filter() and includes() chained.
+
+JavaScript
+
+const common = arr1.filter(val => arr2.includes(val) && arr3.includes(val));
+Q: How would you create an array of keys from an object?
+A: Use Object.keys(obj).
+
+Q: How would you create an array of values from an object?
+A: Use Object.values(obj).
+
+Q: How would you create an array of key-value pairs (entries) from an object?
+A: Use Object.entries(obj).
+
+Advanced Coding Challenges
+Q: Given an array of numbers, find the pair of numbers that sum up to a specific target.
+A: Use a Set or Map to optimize the lookup.
+
+JavaScript
+
+function findPairWithSum(arr, target) {
+  const seen = new Set();
+  for (const num of arr) {
+    const complement = target - num;
+    if (seen.has(complement)) {
+      return [num, complement];
+    }
+    seen.add(num);
+  }
+  return null;
+}
+Q: Given an array of integers, return a new array with a running sum.
+A: Use reduce() with a slightly different approach.
+
+JavaScript
+
+const arr = [1, 2, 3, 4];
+const runningSum = arr.reduce((acc, val, i) => {
+  acc.push((i > 0 ? acc[i - 1] : 0) + val);
+  return acc;
+}, []); // [1, 3, 6, 10]
+Q: Write a function to flatten a deeply nested array without using flat().
+A: Use recursion.
+
+JavaScript
+
+function flatten(arr) {
+  const flatArray = [];
+  arr.forEach(element => {
+    if (Array.isArray(element)) {
+      flatArray.push(...flatten(element));
+    } else {
+      flatArray.push(element);
+    }
+  });
+  return flatArray;
+}
+Q: Find the maximum subarray sum (Kadane's algorithm).
+A: This is a classic dynamic programming problem.
+
+JavaScript
+
+function maxSubarraySum(arr) {
+  let maxSoFar = arr[0];
+  let currentMax = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    currentMax = Math.max(arr[i], currentMax + arr[i]);
+    maxSoFar = Math.max(maxSoFar, currentMax);
+  }
+  return maxSoFar;
+}
+Q: Implement a custom map() method for an array.
+A:
+
+JavaScript
+
+Array.prototype.myMap = function(callback) {
+  const newArray = [];
+  for (let i = 0; i < this.length; i++) {
+    newArray.push(callback(this[i], i, this));
+  }
+  return newArray;
+};
+Q: Implement a custom filter() method for an array.
+A:
+
+JavaScript
+
+Array.prototype.myFilter = function(callback) {
+  const filteredArray = [];
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      filteredArray.push(this[i]);
+    }
+  }
+  return filteredArray;
+};
+Q: Implement a custom reduce() method for an array.
+A:
+
+JavaScript
+
+Array.prototype.myReduce = function(callback, initialValue) {
+  let accumulator = initialValue;
+  for (let i = 0; i < this.length; i++) {
+    if (accumulator !== undefined) {
+      accumulator = callback(accumulator, this[i], i, this);
+    } else {
+      accumulator = this[i];
+    }
+  }
+  return accumulator;
+};
+Q: Given a sorted array, remove duplicates in-place and return the new length.
+A: Use a two-pointer approach.
+
+JavaScript
+
+function removeDuplicates(arr) {
+  if (arr.length === 0) return 0;
+  let i = 0;
+  for (let j = 1; j < arr.length; j++) {
+    if (arr[j] !== arr[i]) {
+      i++;
+      arr[i] = arr[j];
+    }
+  }
+  return i + 1;
+}
+Q: Given an array of integers and a target sum, find if there is a triplet that sums to the target.
+A: Sort the array first, then use a two-pointer approach for each element.
+
+JavaScript
+
+function findTripletSum(arr, target) {
+  arr.sort((a, b) => a - b);
+  for (let i = 0; i < arr.length - 2; i++) {
+    let left = i + 1;
+    let right = arr.length - 1;
+    while (left < right) {
+      const sum = arr[i] + arr[left] + arr[right];
+      if (sum === target) {
+        return true;
+      } else if (sum < target) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+  }
+  return false;
+}
+Q: Find the longest consecutive sequence in an unsorted array of integers.
+A: Use a Set for fast lookups.
+
+JavaScript
+
+function longestConsecutive(arr) {
+  const set = new Set(arr);
+  let longestStreak = 0;
+  for (const num of set) {
+    if (!set.has(num - 1)) { // Check if it's the start of a sequence
+      let currentNum = num;
+      let currentStreak = 1;
+      while (set.has(currentNum + 1)) {
+        currentNum += 1;
+        currentStreak += 1;
+      }
+      longestStreak = Math.max(longestStreak, currentStreak);
+    }
+  }
+  return longestStreak;
+}
+More Advanced & Conceptual Questions
+Q: What is the at() method and why is it useful?
+A: The at() method lets you access an element at a given index, including negative indices. A negative index counts backward from the last element. This is useful for getting the last element without needing arr[arr.length - 1]. For example, arr.at(-1) gives the last element.
+
+Q: Explain why arr.sort() without a compare function can produce unexpected results for numbers.
+A: By default, sort() converts elements to strings and sorts them lexicographically (alphabetically). For numbers, this means '10' comes before '2', leading to incorrect sorting. The compare function (a, b) => a - b is needed to ensure a numerical sort.
+
+Q: What is the time complexity of common array methods like push(), pop(), shift(), and unshift()?
+A:
+
+push() and pop(): O(1) (constant time).
+
+shift() and unshift(): O(n) (linear time), because all subsequent elements need to be re-indexed.
+
+Q: How do you check if an array is empty?
+A: A simple and performant way is to check the length property: arr.length === 0.
+
+Q: How do you reverse a string using array methods?
+A: Convert the string to an array, reverse it, then join it back into a string.
+
+JavaScript
+
+const reversedStr = 'hello'.split('').reverse().join(''); // 'olleh'
+Q: Given an array, find all pairs of indices (i, j) where arr[i] + arr[j] equals a target sum.
+A: This is a variation of question #51, but you need to store indices.
+
+JavaScript
+
+function findIndicesWithSum(arr, target) {
+  const map = new Map();
+  for (let i = 0; i < arr.length; i++) {
+    const complement = target - arr[i];
+    if (map.has(complement)) {
+      return [map.get(complement), i];
+    }
+    map.set(arr[i], i);
+  }
+  return [];
+}
+Q: What is the difference between null and undefined in the context of arrays?
+A: An element is undefined if it's been declared but not assigned a value (e.g., const arr = [1, , 3];). An element can be explicitly assigned null (const arr = [1, null, 3];). null is an intentional absence of a value, while undefined is an unintentional one.
+
+Q: How do you handle non-primitive types (objects, arrays) when using indexOf() or includes()?
+A: indexOf() and includes() perform a strict equality comparison (===). This works for primitive types but will fail for non-primitives unless they are the exact same reference. You'd need to use find() or findIndex() with a custom comparison callback for objects.
+
+Q: What is a TypedArray? How is it different from a regular array?
+A: A TypedArray is an array-like object that provides a mechanism for accessing raw binary data. Unlike regular arrays, they are not flexible in size and contain a fixed-size buffer of single-type elements (e.g., 32-bit integers). They are used for high-performance applications like graphics, audio processing, and WebAssembly.
+
+Q: How do you remove a specific element from an array by its value without modifying the original array?
+A: Use filter(): const newArr = arr.filter(item => item !== valueToRemove);.
+
+Logic & Problem-Solving
+Q: Find all unique elements that appear in two arrays (union of two sets).
+A: Use a Set to collect all elements.
+
+JavaScript
+
+const arr1 = [1, 2, 3];
+const arr2 = [3, 4, 5];
+const union = [...new Set([...arr1, ...arr2])]; // [1, 2, 3, 4, 5]
+Q: Given a 2D array (matrix), transpose it.
+A:
+
+JavaScript
+
+function transpose(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  const transposed = Array.from({ length: cols }, () => []);
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      transposed[j][i] = matrix[i][j];
+    }
+  }
+  return transposed;
+}
+Q: Given an array of integers, return a new array where each element is the product of all other elements.
+A: This is a classic "product of array except self" problem.
+
+JavaScript
+
+function productExceptSelf(arr) {
+  const n = arr.length;
+  const result = new Array(n).fill(1);
+  let prefix = 1;
+  for (let i = 0; i < n; i++) {
+    result[i] = prefix;
+    prefix *= arr[i];
+  }
+  let suffix = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    result[i] *= suffix;
+    suffix *= arr[i];
+  }
+  return result;
+}
+Q: Implement a function to chunk an array into smaller arrays of a specified size.
+A:
+
+JavaScript
+
+function chunkArray(arr, size) {
+  const chunked = [];
+  for (let i = 0; i < arr.length; i += size) {
+    chunked.push(arr.slice(i, i + size));
+  }
+  return chunked;
+}
+Q: Find the missing number in a given integer array from 1 to n.
+A: The most efficient way is to use the sum formula.
+
+JavaScript
+
+function findMissing(arr) {
+  const n = arr.length + 1;
+  const expectedSum = n * (n + 1) / 2;
+  const actualSum = arr.reduce((sum, val) => sum + val, 0);
+  return expectedSum - actualSum;
+}
+Q: Rotate a square matrix 90 degrees clockwise in-place.
+A: This is a two-step process: transpose the matrix, then reverse each row.
+
+JavaScript
+
+function rotateMatrix(matrix) {
+  // Transpose
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = i; j < matrix.length; j++) {
+      [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+    }
+  }
+  // Reverse rows
+  for (let i = 0; i < matrix.length; i++) {
+    matrix[i].reverse();
+  }
+}
+Q: Given an array of numbers, return the first duplicate element.
+A:
+
+JavaScript
+
+function findFirstDuplicate(arr) {
+  const seen = new Set();
+  for (const num of arr) {
+    if (seen.has(num)) {
+      return num;
+    }
+    seen.add(num);
+  }
+  return undefined;
+}
+Q: What is the keys() method?
+A: Array.prototype.keys() returns a new Array Iterator object that contains the keys (indices) for each index in the array. This is useful for iterating over indices.
+
+Q: What is the values() method?
+A: Array.prototype.values() returns a new Array Iterator object that contains the values for each index in the array.
+
+Q: What is the entries() method?
+A: Array.prototype.entries() returns a new Array Iterator object that contains the [key, value] pairs for each index in the array. This is often used with a for...of loop to get both the index and value.
+
+JavaScript
+
+for (const [index, value] of arr.entries()) {
+  console.log(index, value);
+}
+Practical & Advanced Scenarios
+Q: How would you implement a queue using an array?
+A: Use push() to add elements to the end and shift() to remove from the front.
+
+JavaScript
+
+const queue = [];
+queue.push(1); // Add to end
+queue.push(2);
+const firstIn = queue.shift(); // Remove from front (1)
+Note: shift() is O(n), so for a large queue, this is inefficient. A linked list is a better data structure for a queue.
+
+Q: How would you implement a stack using an array?
+A: Use push() to add elements and pop() to remove elements. This is efficient as both operations are O(1).
+
+JavaScript
+
+const stack = [];
+stack.push(1); // Add to end
+stack.push(2);
+const lastIn = stack.pop(); // Remove from end (2)
+Q: Find the median of a sorted array.
+A:
+
+JavaScript
+
+function findMedian(arr) {
+  const mid = Math.floor(arr.length / 2);
+  if (arr.length % 2 === 0) {
+    return (arr[mid - 1] + arr[mid]) / 2;
+  }
+  return arr[mid];
+}
+Q: How can you reverse an array without using the reverse() method?
+A: Use a loop and a two-pointer approach, or reduce().
+
+JavaScript
+
+function reverseArray(arr) {
+  const newArr = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    newArr.push(arr[i]);
+  }
+  return newArr;
+}
+Q: How do you sort an array of objects based on a specific property?
+A: Use the sort() method with a custom compare function that accesses the property.
+
+JavaScript
+
+const users = [{ name: 'B', age: 30 }, { name: 'A', age: 25 }];
+users.sort((a, b) => a.age - b.age); // Sort by age
+users.sort((a, b) => a.name.localeCompare(b.name)); // Sort by name
+Q: What is the fill() method?
+A: fill() changes all elements in an array to a static value from a start index to an end index.
+
+JavaScript
+
+const arr = [1, 2, 3, 4, 5];
+arr.fill(0, 2, 4); // [1, 2, 0, 0, 5]
+Q: What is the copyWithin() method?
+A: copyWithin() copies part of an array to another location in the same array and returns it without changing its length. It's often considered a niche and confusing method.
+
+Q: How do you convert an array of numbers into a single number?
+A: You can use reduce() and multiply by 10 for each new digit, or join and use parseInt().
+
+JavaScript
+
+const arr = [1, 2, 3];
+const num = arr.reduce((acc, val) => acc * 10 + val); // 123
+Q: What are array-like objects and how can you convert them to arrays?
+A: Array-like objects have a length property and indexed elements, but they don't have built-in array methods like map(), forEach(), etc. Examples include arguments and NodeList. You can convert them using Array.from() or the spread operator ([...arrayLike]).
+
+Q: How would you flatten a deeply nested array using a stack instead of recursion?
+A:
+
+JavaScript
+
+function flattenIterative(arr) {
+  const flat = [];
+  const stack = [...arr]; // Shallow copy to avoid modifying original
+  while (stack.length) {
+    const item = stack.pop();
+    if (Array.isArray(item)) {
+      stack.push(...item);
+    } else {
+      flat.unshift(item); // Add to the front to maintain order
+    }
+  }
+  return flat;
+}
+Final 10: Tricky & Edge Cases
+Q: Given an array of integers, find the first integer that is not a prime number.
+A: You need a helper function to check for primality.
+
+JavaScript
+
+function isPrime(num) {
+  if (num <= 1) return false;
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) return false;
+  }
+  return true;
+}
+const numbers = [2, 3, 5, 7, 8, 11];
+const firstNonPrime = numbers.find(num => !isPrime(num)); // 8
+Q: How do you check if an array contains duplicate objects based on a property?
+A: Use a Set to store seen IDs.
+
+JavaScript
+
+function hasDuplicateObjects(arr, key) {
+  const seen = new Set();
+  for (const obj of arr) {
+    if (seen.has(obj[key])) {
+      return true;
+    }
+    seen.add(obj[key]);
+  }
+  return false;
+}
+Q: Find the maximum difference between any two elements in an array.
+A:
+
+JavaScript
+
+function maxDifference(arr) {
+  if (arr.length < 2) return 0;
+  return Math.max(...arr) - Math.min(...arr);
+}
+Q: How would you memoize a function that operates on an array?
+A: Use a Map or an object to cache results. The key to the cache would be a stringified version of the array to be predictable.
+
+JavaScript
+
+const cache = new Map();
+function sumArray(arr) {
+  const key = JSON.stringify(arr);
+  if (cache.has(key)) {
+    return cache.get(key);
+  }
+  const result = arr.reduce((sum, val) => sum + val, 0);
+  cache.set(key, result);
+  return result;
+}
+Q: What is the reduceRight() method?
+A: reduceRight() works exactly like reduce(), but it processes the array elements from right to left.
+
+Q: Given an array with null and undefined values, how would you remove them?
+A: Use filter().
+
+JavaScript
+
+const arr = [1, null, 2, undefined, 3, 'a'];
+const cleaned = arr.filter(val => val != null); // != null checks for both null and undefined
+Q: How do you handle circular references when deep cloning an array?
+A: JSON.parse(JSON.stringify()) fails with circular references. Libraries like Lodash's _.cloneDeep() handle them by keeping track of objects already visited in the current traversal.
+
+Q: Write a function to check if an array is sorted.
+A: Use every() to check if each element is less than or equal to the next.
+
+JavaScript
+
+function isSorted(arr) {
+  return arr.every((val, i) => i === 0 || val >= arr[i - 1]);
+}
+Q: What is Array.prototype.sort()'s stability?
+A: Since ECMAScript 2019, Array.prototype.sort() is guaranteed to be stable. This means if two elements compare as equal, their relative order in the sorted array will be preserved.
+
+Q: Explain the arguments object in JavaScript and why Array.from() is useful for it.
+A: The arguments object is an array-like object available inside a function that contains the values of the arguments passed to that function. It is not a true array and lacks array methods. Array.from(arguments) or the spread syntax [...arguments] is the standard way to convert it to a real array so you can use methods like map(), filter(), etc.
