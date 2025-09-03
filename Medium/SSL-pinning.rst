@@ -17,3 +17,16 @@ A certificate is a file that encapsulates the information about server that owns
 8. Digital Signature: A bit string used to verify the authenticity of the certificate.
 9. Version: Version number of certificate
 10. TimeStamp: This shows the time when certificate was created
+
+There are several commonly used filename extensions foe digital certificates -
+(a) PEM (Privacy enchanced mail)
+A Base-64 encoding, whose file extension is .pem. The certificate information is enclosed between “ — — -BEGIN CERTIFICATE — — -” and “ — — -END CERTIFICATE — — -”
+(b) PKCS (Public-key-cryptography standards)
+Used to exchange public and private objects in a single file. Its extensions are .p7b, .p7c, .p12 etc.
+(c) DER(Distinguished Encoding Rules): A binary encoding, whose file extensions are .cer, .der and .crt.
+
+
+Why do we need ssl pinning ?
+SSL pinning allows the application to trust only the valid or pre-defined certificate or public key. The app developer uses SSL pinning technique as an additional security layer fir app traffic. 
+As normally, the application trusts custom certificate and allows the application to intercept the traffic.
+
