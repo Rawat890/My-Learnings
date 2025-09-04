@@ -4,6 +4,7 @@ The connection ensures that all the data that is passed between the web server a
 These keys work together to establish the encrypted connection. The certificate also contains (Subject) which is the identity of the certificate/website owner
 
 SSL certificate pinning is the process of associating the host with its certificate or public key. once you know the host certificate public key, you pin it to that host.
+It helps prevent man-in-the-middle (MITM) attacks by ensuring that the app only communicates with servers that possess a specific certificate or public key, thereby thwarting attempts to intercept or tamper with the communication.
 
 What is certificate ?
 A certificate is a file that encapsulates the information about server that owns the certificate. It's similar to the identification card, such as passport. The structire uses X.509 standards. It holds many information -
@@ -27,6 +28,20 @@ Used to exchange public and private objects in a single file. Its extensions are
 
 
 Why do we need ssl pinning ?
-SSL pinning allows the application to trust only the valid or pre-defined certificate or public key. The app developer uses SSL pinning technique as an additional security layer fir app traffic. 
+SSL pinning allows the application to trust only the valid or pre-defined certificate or public key. The app developer uses SSL pinning technique as an additional security layer for app traffic. 
 As normally, the application trusts custom certificate and allows the application to intercept the traffic.
 
+Restricting the set of trusted certificates through pinning prevents the attackers from analyzing the functionality of the app and the way it communicates with the server.
+
+HOW SSL WORKS ?
+
+How SSL works?
+1. Client machine sends a connection request to server, server listens the request.
+2. Server gives response including public key and certificate.
+3. Client checks the certificate and sends a encrypted key to server.
+4. Server decrypt the key and sends encrypted data back to the client machine.
+5. Client receives and decrypt the encrypted data.
+
+Types of SSL Pinning(What to Pin)?
+* Pin the certificate: You can download the server’s certificate and put this in your app bundle. At runtime, the app compares the server’s certificate to the one you’ve embedded.
+* Pin the public key: You can retrieve the certificate’s public key and include it in your code as a string. At runtime, the app compares the certificate’s public key to the one hard-coded hash string in your code.
