@@ -20,6 +20,11 @@ A: Use the shift() method: arr.shift().
 Q: How do you find the index of a specific element?
 A: Use indexOf(): arr.indexOf(element). It returns -1 if the element is not found.
 
+Q: What is shallow and deep copy ?
+A shallow copy of an array creates a new array, but the elements within it are still references to the same objects as the original array. This means if you modify a nested object or array in the copied array, the change will also be reflected in the original array.
+
+A deep copy creates a completely independent copy of the array and all of its nested objects and arrays. Changes made to the copied version will not affect the original array, and vice versa.
+
 Q: How do you check if an element exists in an array?
 **A: includes() is the modern way: arr.includes(element). It returns a boolean. You could also use indexOf() !== -1.
 
